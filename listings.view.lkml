@@ -398,11 +398,6 @@ view: listings {
     sql: ${TABLE}.picture_url ;;
   }
 
-  dimension: price {
-    type: number
-    sql: ${TABLE}.price ;;
-  }
-
   dimension: property_type {
     type: string
     sql: ${TABLE}.property_type ;;
@@ -531,6 +526,38 @@ view: listings {
   dimension: zipcode {
     type: zipcode
     sql: ${TABLE}.zipcode ;;
+  }
+
+  dimension: price {
+    type: number
+    sql: ${TABLE}.price ;;
+  }
+
+  measure: first_quartile {
+    type: percentile
+    percentile: 25
+    sql: ${price} ;;
+  }
+  measure: third_quartile {
+    type: percentile
+    percentile: 75
+    sql: ${price} ;;
+  }
+
+  measure: second_quartile {
+    type: percentile
+    percentile: 50
+    sql: ${price} ;;
+  }
+
+  measure: min {
+    type: min
+    sql: ${price} ;;
+  }
+
+  measure: max {
+    type: max
+    sql: ${price} ;;
   }
 
   measure: count {

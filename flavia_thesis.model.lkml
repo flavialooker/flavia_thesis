@@ -19,7 +19,7 @@ explore: calendar {
 }
 
 explore: listings {
-  join: reviews {
+  join:reviews {
     type: left_outer
     sql_on: ${listings.id} = ${reviews.listing_id} ;;
     relationship: one_to_many
