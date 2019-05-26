@@ -4,7 +4,7 @@ view: airbnb_dublin {
 # include: "flavia_thesis.model.lkml"
     derived_table: {
       explore_source: listings {
-        column: id {}
+        column: Listing_ID {field: listings.id}
         column: host_id {}
         column: neighbourhood {}
         column: room_type {}
@@ -21,8 +21,14 @@ view: airbnb_dublin {
     dimension: host_id {
       type: number
     }
-    dimension: neighbourhood {}
-    dimension: room_type {}
+    dimension: neighbourhood {
+      type: string
+    }
+
+    dimension: room_type {
+      type: string
+    }
+
     dimension: price {
       type: number
     }
