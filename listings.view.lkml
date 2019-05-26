@@ -583,7 +583,7 @@ view: listings {
 
   measure: average_monthly_price {
     type: average
-    sql: ${smart_location} ;;
+    sql: ${monthly_price} ;;
   }
   measure: Sum_reviews {
     type: sum
@@ -593,5 +593,8 @@ view: listings {
     type: sum
     sql: ${reviews_per_month} ;;
   }
-
+measure: sum_price {
+  type: sum
+  sql: ${price} ;;
+}
 }
