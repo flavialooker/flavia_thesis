@@ -19,10 +19,15 @@ explore: calendar {
 }
 
 explore: listings {
-  join:reviews {
+  join:calendar {
     type: left_outer
-    sql_on: ${listings.id} = ${reviews.listing_id} ;;
-    relationship: one_to_many
+    sql_on: ${listings.id} = ${calendar.listing_id} ;;
+    relationship: one_to_one
+  }
+  join: reviews {
+    type: left_outer
+    sql_on: ${calendar.listing_id} = ${reviews.listing_id};;
+    relationship: one_to_one
   }
 }
 
@@ -30,6 +35,6 @@ explore: reviews {
   join: calendar {
     type: left_outer
     sql_on: ${reviews.listing_id} = ${calendar.listing_id} ;;
-    relationship: many_to_one
+    relationship: one_to_one
   }
 }
