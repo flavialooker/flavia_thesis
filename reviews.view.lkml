@@ -44,6 +44,16 @@ view: reviews {
     sql: ${TABLE}.reviewer_name ;;
   }
 
+  dimension: number_of_reviews  {
+    type: number
+    sql: ${listings.number_of_reviews} ;;
+  }
+
+  measure: Sum_reviews {
+    type: sum
+    sql: ${number_of_reviews} ;;
+   }
+
   measure: count {
     type: count
     drill_fields: [id, reviewer_name, listings.id, listings.name, listings.host_name]

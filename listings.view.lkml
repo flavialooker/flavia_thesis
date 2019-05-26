@@ -564,4 +564,34 @@ view: listings {
     type: count
     drill_fields: [id, name, host_name, calendar.count, reviews.count]
   }
+
+  measure: listing_count {
+    type: count_distinct
+    sql: ${id} ;;
+  }
+
+  measure: average_price {
+    type: average
+    sql: ${price} ;;
+  }
+
+  measure: average_weekly_price {
+#     group this under average
+    type: average
+    sql: ${weekly_price} ;;
+  }
+
+  measure: average_monthly_price {
+    type: average
+    sql: ${smart_location} ;;
+  }
+  measure: Sum_reviews {
+    type: sum
+    sql: ${number_of_reviews} ;;
+  }
+  measure: total_reviews_per_month {
+    type: sum
+    sql: ${reviews_per_month} ;;
+  }
+
 }
