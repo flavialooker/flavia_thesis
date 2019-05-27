@@ -28,7 +28,7 @@ explore: listings {
   }
   join: reviews {
     type: left_outer
-    sql_on: ${calendar.listing_id} = ${reviews.listing_id};;
+    sql_on: ${listings.id} = ${reviews.listing_id} ;;
     relationship: one_to_one
   }
 }

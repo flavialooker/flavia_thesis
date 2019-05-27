@@ -567,27 +567,36 @@ view: listings {
 
   measure: listing_count {
     type: count_distinct
+    drill_fields: [id,host_name, neighbourhood, beds,host_since_date,price]
     sql: ${id} ;;
   }
 
   measure: average_price {
     type: average
     sql: ${price} ;;
+    value_format_name: eur
+    drill_fields: [id,host_name, neighbourhood, amenities, beds,average_price,price]
   }
 
   measure: average_weekly_price {
 #     group this under average
     type: average
     sql: ${weekly_price} ;;
+    value_format_name: eur
+    drill_fields: [id,host_name, neighbourhood, amenities, beds, average_weekly_price, weekly_price]
   }
 
   measure: average_monthly_price {
     type: average
     sql: ${monthly_price} ;;
+    value_format_name: eur
+    drill_fields: [id,host_name, neighbourhood, amenities, beds,listings.average_monthly_price, monthly_price]
   }
+
   measure: Sum_reviews {
     type: sum
     sql: ${number_of_reviews} ;;
+    drill_fields: [id, host_name,number_of_reviews, review_scores_rating, reviews.comments]
   }
   measure: total_reviews_per_month {
     type: sum

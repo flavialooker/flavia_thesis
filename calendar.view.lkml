@@ -14,10 +14,7 @@ view: calendar {
       week,
       month,
       quarter,
-      year
-    ]
-    convert_tz: no
-    datatype: date
+      year]
     sql: ${TABLE}.date ;;
   }
 
@@ -31,6 +28,20 @@ view: calendar {
   dimension: price {
     type: number
     sql: ${TABLE}.price ;;
+  }
+
+  measure: last_update_date {
+    type: date
+    drill_fields: [listings.id, listings.name, listings.host_name, date_date]
+    sql: MAX(${date_date}) ;;
+    convert_tz: no
+  }
+
+  measure: fist_data_date {
+    type: date
+    drill_fields: [listings.id, listings.name, listings.host_name, date_date]
+    sql: MIN(${date_date}) ;;
+    convert_tz: no
   }
 
   measure: count {
