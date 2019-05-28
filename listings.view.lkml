@@ -63,6 +63,7 @@ view: listings {
   }
 
   dimension: calculated_host_listings_count {
+    description: "Not sure about this dimension"
     type: number
     sql: ${TABLE}.calculated_host_listings_count ;;
   }
@@ -144,6 +145,7 @@ view: listings {
   }
 
   dimension: guests_included {
+    hidden: yes
     type: number
     sql: ${TABLE}.guests_included ;;
   }
@@ -184,6 +186,7 @@ view: listings {
   }
 
   dimension: host_listings_count {
+    hidden: yes
     type: number
     sql: ${TABLE}.host_listings_count ;;
   }
@@ -218,7 +221,7 @@ view: listings {
     sql: ${TABLE}.host_response_time ;;
   }
 
-  dimension_group: host_since {
+  dimension_group: host_started{
     type: time
     timeframes: [
       raw,
@@ -234,11 +237,13 @@ view: listings {
   }
 
   dimension: host_thumbnail_url {
+    hidden: yes
     type: string
     sql: ${TABLE}.host_thumbnail_url ;;
   }
 
   dimension: host_total_listings_count {
+    description: "Count of listing per profile despite located in Dublin"
     type: number
     sql: ${TABLE}.host_total_listings_count ;;
   }
@@ -269,6 +274,7 @@ view: listings {
   }
 
   dimension: is_business_travel_ready {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.is_business_travel_ready ;;
   }
@@ -279,6 +285,7 @@ view: listings {
   }
 
   dimension: jurisdiction_names {
+    hidden: yes
     type: string
     sql: ${TABLE}.jurisdiction_names ;;
   }
@@ -299,6 +306,7 @@ view: listings {
   }
 
   dimension_group: last_scraped {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -319,6 +327,7 @@ view: listings {
   }
 
   dimension: license {
+    hidden: yes
     type: string
     sql: ${TABLE}.license ;;
   }
@@ -344,6 +353,7 @@ view: listings {
   }
 
   dimension: medium_url {
+    hidden: yes
     type: string
     sql: ${TABLE}.medium_url ;;
   }
@@ -374,11 +384,13 @@ view: listings {
   }
 
   dimension: neighbourhood_cleansed {
+    hidden: yes
     type: string
     sql: ${TABLE}.neighbourhood_cleansed ;;
   }
 
   dimension: neighbourhood_group_cleansed {
+  hidden: yes
     type: string
     sql: ${TABLE}.neighbourhood_group_cleansed ;;
   }
@@ -409,11 +421,13 @@ view: listings {
   }
 
   dimension: require_guest_profile_picture {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.require_guest_profile_picture ;;
   }
 
   dimension: requires_license {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.requires_license ;;
   }
@@ -484,6 +498,7 @@ view: listings {
   }
 
   dimension: square_feet {
+    hidden: yes
     type: number
     sql: ${TABLE}.square_feet ;;
   }
@@ -504,6 +519,7 @@ view: listings {
   }
 
   dimension: thumbnail_url {
+    hidden: yes
     type: string
     sql: ${TABLE}.thumbnail_url ;;
   }
@@ -519,11 +535,13 @@ view: listings {
   }
 
   dimension: xl_picture_url {
+    hidden: yes
     type: string
     sql: ${TABLE}.xl_picture_url ;;
   }
 
   dimension: zipcode {
+    hidden: yes
     type: zipcode
     sql: ${TABLE}.zipcode ;;
   }
@@ -562,12 +580,12 @@ view: listings {
 
   measure: count {
     type: count
-    drill_fields: [id, name, host_name, calendar.count, reviews.count]
+    drill_fields: [id, name, host_name, neighbourhood, calendar.count, reviews.count]
   }
 
   measure: listing_count {
     type: count_distinct
-    drill_fields: [id,host_name, neighbourhood, beds,host_since_date,price]
+    drill_fields: [id,host_name, neighbourhood, beds,host_started_date,price]
     sql: ${id} ;;
   }
 
@@ -601,6 +619,7 @@ view: listings {
   measure: total_reviews_per_month {
     type: sum
     sql: ${reviews_per_month} ;;
+    drill_fields:[id, host_name, reviews_per_month, review_scores_rating, reviews.comments,]
   }
 measure: sum_price {
   type: sum

@@ -6,7 +6,7 @@ view: calendar {
     sql: ${TABLE}.available ;;
   }
 
-  dimension_group: date {
+  dimension_group: calendar {
     type: time
     timeframes: [
       raw,
@@ -32,16 +32,25 @@ view: calendar {
 
   measure: last_update_date {
     type: date
-    drill_fields: [listings.id, listings.name, listings.host_name, date_date]
-    sql: MAX(${date_date}) ;;
+    drill_fields: [listings.id, listings.name, listings.host_name, calendar_date]
+    sql: MAX(${calendar_date}) ;;
     convert_tz: no
   }
 
   measure: fist_data_date {
     type: date
-    drill_fields: [listings.id, listings.name, listings.host_name, date_date]
-    sql: MIN(${date_date}) ;;
+    drill_fields: [listings.id, listings.name, listings.host_name, calendar_date  ]
+    sql: MIN(${calendar_date}) ;;
     convert_tz: no
+  }
+
+  measure: available_listings {
+    type: count_distinct
+    sql: ${listing_id} ;;
+    filters: {
+      field: available
+      value: "yes"
+    }
   }
 
   measure: count {
