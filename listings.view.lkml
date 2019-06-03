@@ -94,6 +94,7 @@ view: listings {
   }
 
   dimension: city {
+    hidden: yes
     type: string
     sql: ${TABLE}.city ;;
   }
@@ -209,6 +210,12 @@ view: listings {
   dimension: host_picture_url {
     type: string
     sql: ${TABLE}.host_picture_url ;;
+  }
+
+  dimension: host_picture {
+    type: string
+    sql: 1 ;;
+    html: <img src="{{host_picture_url._value}}"/> ;;
   }
 
   dimension: host_response_rate {
@@ -578,12 +585,12 @@ view: listings {
     sql: ${price} ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [id, name, host_name, neighbourhood, calendar.count, reviews.count]
-  }
+#   measure: count {
+#     type: count
+#     drill_fields: [id, name, host_name, neighbourhood, calendar.count, reviews.count]
+#   }
 
-  measure: listing_count {
+  measure: listings_count{
     type: count_distinct
     drill_fields: [id,host_name, neighbourhood, beds,host_started_date,price]
     sql: ${id} ;;

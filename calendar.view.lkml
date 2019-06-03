@@ -14,7 +14,10 @@ view: calendar {
       week,
       month,
       quarter,
+      day_of_week,
+      day_of_week_index,
       year]
+    datatype: date
     sql: ${TABLE}.date ;;
   }
 

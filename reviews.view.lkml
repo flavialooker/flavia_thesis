@@ -45,6 +45,7 @@ view: reviews {
   }
 
   dimension: number_of_reviews  {
+    hidden: yes
     type: number
     sql: ${listings.number_of_reviews} ;;
   }
