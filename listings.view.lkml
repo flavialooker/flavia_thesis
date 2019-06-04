@@ -388,6 +388,7 @@ view: listings {
   dimension: neighbourhood {
     type: string
     sql: ${TABLE}.neighbourhood ;;
+    map_layer_name: dublin_map
   }
 
   dimension: neighbourhood_cleansed {

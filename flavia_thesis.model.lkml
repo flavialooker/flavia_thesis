@@ -3,6 +3,26 @@ connection: "lookerdata_publicdata_standard_sql"
 # include all the views
 include: "*.view"
 
+map_layer: dublin_map {
+  file: "map.topojson"
+}
+explore: dublin_regions {
+  join: listings {
+    type: left_outer
+    sql_on: ${dublin_regions.id}=${listings.id} ;;
+    relationship: one_to_one
+  }
+  join: calendar {
+    type: left_outer
+    sql_on: ${dublin_regions.id}= ${calendar.listing_id} ;;
+    relationship: one_to_one
+  }
+  join: reviews {
+    type: left_outer
+    sql_on: ${dublin_regions.id} = ${reviews.id} ;;
+    relationship: one_to_one
+  }
+}
 
 explore: calendar {
   join: listings {
@@ -36,5 +56,5 @@ join: listings {
   type: left_outer
   sql_on: ${reviews.listing_id} = ${listings.id} ;;
   relationship: one_to_one
-}
+ }
 }

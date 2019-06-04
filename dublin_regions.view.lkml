@@ -24,11 +24,14 @@ view: dublin_regions {
 
   dimension: neighbourhood {
     type: string
+    map_layer_name: dublin_map
     sql: ${TABLE}.neighbourhood ;;
+
   }
 
   dimension: regions {
     type: string
+    map_layer_name: dublin_map
     sql: ${TABLE}.regions ;;
   }
 
