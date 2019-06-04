@@ -12,15 +12,15 @@ explore: dublin_regions {
     sql_on: ${dublin_regions.id}=${listings.id} ;;
     relationship: one_to_one
   }
-  join: calendar {
-    type: left_outer
-    sql_on: ${dublin_regions.id}= ${calendar.listing_id} ;;
-    relationship: one_to_one
-  }
+#   join: calendar {
+#     type: left_outer
+#     sql_on: ${dublin_regions.id}= ${calendar.listing_id} ;;
+#     relationship: one_to_one
+#   }
   join: reviews {
     type: left_outer
-    sql_on: ${dublin_regions.id} = ${reviews.id} ;;
-    relationship: one_to_one
+    sql_on: ${dublin_regions.id} = ${reviews.listing_id} ;;
+    relationship: one_to_many
   }
 }
 
@@ -28,7 +28,7 @@ explore: calendar {
   join: listings {
     type: left_outer
     sql_on: ${calendar.listing_id} = ${listings.id} ;;
-    relationship: one_to_one
+    relationship: many_to_one
   }
 }
 
@@ -36,12 +36,12 @@ explore: listings {
   join:calendar {
     type: left_outer
     sql_on: ${listings.id} = ${calendar.listing_id} ;;
-    relationship: one_to_one
+    relationship: one_to_many
   }
   join: reviews {
     type: left_outer
     sql_on: ${listings.id} = ${reviews.listing_id} ;;
-    relationship: one_to_one
+    relationship: one_to_many
   }
   join: dublin_regions {
     type: left_outer
@@ -54,12 +54,14 @@ explore: reviews {
   join: calendar {
     type: left_outer
     sql_on: ${reviews.listing_id} = ${calendar.listing_id} ;;
-    relationship: one_to_one
+    relationship: many_to_many
   }
 
 join: listings {
   type: left_outer
   sql_on: ${reviews.listing_id} = ${listings.id} ;;
-  relationship: one_to_one
+  relationship: many_to_one
  }
 }
+
+explore: sql_runner_query {}

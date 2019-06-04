@@ -474,6 +474,7 @@ dimension: listings_location {
   dimension: review_scores_rating {
     type: number
     sql: ${TABLE}.review_scores_rating ;;
+    drill_fields: [review_scores_accuracy]
   }
 
   dimension: review_scores_value {
@@ -639,4 +640,15 @@ measure: sum_price {
   type: sum
   sql: ${price} ;;
 }
+
+measure: avg_rating {
+type: average
+sql: ${review_scores_rating} ;;
+}
+
+measure: sum_rating {
+  type: sum
+  sql: ${review_scores_rating} ;;
+}
+
 }

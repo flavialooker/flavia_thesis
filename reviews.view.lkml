@@ -2,7 +2,7 @@ view: reviews {
   sql_table_name: Flavia.reviews ;;
 
   dimension: id {
-#     primary_key: yes
+    primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
   }
@@ -28,7 +28,6 @@ view: reviews {
   }
 
   dimension: listing_id {
-    primary_key: yes
     type: number
     # hidden: yes
     sql: ${TABLE}.listing_id ;;

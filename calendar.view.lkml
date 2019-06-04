@@ -5,6 +5,11 @@ view: calendar {
     type: yesno
     sql: ${TABLE}.available ;;
   }
+dimension: id {
+  primary_key: yes
+  type: string
+  sql: GENERATE_UUID() ;;
+}
 
   dimension_group: calendar {
     type: time
@@ -22,7 +27,6 @@ view: calendar {
   }
 
   dimension: listing_id {
-    primary_key: yes
     type: number
     # hidden: yes
     sql: ${TABLE}.listing_id ;;
