@@ -24,7 +24,7 @@ view: dublin_regions {
 
   dimension: neighbourhood {
     type: string
-    map_layer_name: dublin_map
+    # map_layer_name: dublin_map
     sql: ${TABLE}.neighbourhood ;;
 
   }

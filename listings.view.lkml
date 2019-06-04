@@ -328,6 +328,12 @@ view: listings {
     sql: ${TABLE}.last_scraped ;;
   }
 
+dimension: listings_location {
+  type: location
+  sql_latitude: ${latitude} ;;
+  sql_longitude: ${longitude} ;;
+}
+
   dimension: latitude {
     type: number
     sql: ${TABLE}.latitude ;;
@@ -388,7 +394,7 @@ view: listings {
   dimension: neighbourhood {
     type: string
     sql: ${TABLE}.neighbourhood ;;
-    map_layer_name: dublin_map
+    # map_layer_name: dublin_map
   }
 
   dimension: neighbourhood_cleansed {

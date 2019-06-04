@@ -43,6 +43,11 @@ explore: listings {
     sql_on: ${listings.id} = ${reviews.listing_id} ;;
     relationship: one_to_one
   }
+  join: dublin_regions {
+    type: left_outer
+    sql_on: ${listings.id} = ${dublin_regions.id} ;;
+    relationship: one_to_one
+  }
 }
 
 explore: reviews {
