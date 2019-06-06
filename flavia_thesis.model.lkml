@@ -63,5 +63,3 @@ join: listings {
   relationship: many_to_one
  }
 }
-
-explore: sql_runner_query {}

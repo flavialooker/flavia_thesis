@@ -94,10 +94,143 @@ view: listings {
   }
 
   dimension: city {
-    hidden: yes
-    type: string
-    sql: ${TABLE}.city ;;
-  }
+    case: {
+      when: {
+        sql: ${TABLE}.city LIKE "Dublin%" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Arbour Hill" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Ashtown" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Artane" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Ballsbridge" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Ballymun" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Beaumont" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Cabra" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city ="Churchtown" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Clontarf" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Donnybrook" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Drimnagh" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Drumcondra" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Fairview" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city LIKE "Finglas%" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Glasnevin" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Harold's Cross" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Irishtown" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Kilmainham" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Kimmage" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Marino" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "North Strand" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Phibsborough" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Raheny" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Ranelagh" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Rathfarnham" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Rathgar" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Rathmines" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city LIKE "Ri%" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Sandymount" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Santry" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Terenure" ;;
+        label: "Dublin"
+      }
+      when: {
+        sql: ${TABLE}.city = "Whitehall" ;;
+        label: "Dublin"
+      }
+      else: "Outside Dublin"
+    }
+    }
+
 
   dimension: cleaning_fee {
     type: number
@@ -629,7 +762,8 @@ dimension: listings_location {
   measure: Sum_reviews {
     type: sum
     sql: ${number_of_reviews} ;;
-    drill_fields: [id, host_name,number_of_reviews, review_scores_rating, reviews.comments]
+    drill_fields: [id, host_name, review_scores_rating, reviews.comments, review_scores_accuracy,
+      review_scores_checkin, review_scores_cleanliness, review_scores_location, review_scores_value]
   }
   measure: total_reviews_per_month {
     type: sum
@@ -639,11 +773,6 @@ dimension: listings_location {
 measure: sum_price {
   type: sum
   sql: ${price} ;;
-}
-
-measure: avg_rating {
-type: average
-sql: ${review_scores_rating} ;;
 }
 
 measure: sum_rating {

@@ -12,7 +12,7 @@ view: sql_runner_query {
         ((reviews.comments IS NOT NULL AND LENGTH(reviews.comments ) <> 0 ) AND reviews.comments NOT LIKE '%The host canceled%' AND reviews.comments <> '.')
       GROUP BY 1,2
       ORDER BY 3 DESC,4 DESC
-      LIMIT 10
+      LIMIT 100
        ;;
   }
 
@@ -24,6 +24,7 @@ view: sql_runner_query {
   dimension: listings_id {
     type: number
     sql: ${TABLE}.listings_id ;;
+  order_by_field: listings_sum_rating
   }
 
   dimension: reviews_comments {

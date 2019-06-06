@@ -59,6 +59,11 @@ dimension: id {
       value: "yes"
     }
   }
+  measure: sum_rental {
+    type: sum
+    sql: ${price} ;;
+    value_format_name: eur_0
+  }
 
   measure: count {
     type: count
