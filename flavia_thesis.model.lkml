@@ -25,6 +25,12 @@ explore: dublin_regions {
 }
 
 explore: calendar {
+  always_filter: {
+    filters: {
+      field: listing_id
+      value: "!=27063211"
+    }
+  }
   join: listings {
     type: left_outer
     sql_on: ${calendar.listing_id} = ${listings.id} ;;

@@ -289,6 +289,7 @@ view: listings {
     sql: ${TABLE}.has_availability ;;
   }
 
+
   dimension: host_about {
     type: string
     sql: ${TABLE}.host_about ;;
@@ -528,6 +529,15 @@ dimension: listings_location {
     type: string
     sql: ${TABLE}.neighbourhood ;;
     # map_layer_name: dublin_map
+  }
+
+  parameter: max_rank {
+    type: number
+  }
+
+  dimension: rank_limit {
+    type: number
+    sql: {% parameter max_rank %} ;;
   }
 
   dimension: neighbourhood_cleansed {

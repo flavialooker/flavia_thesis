@@ -65,6 +65,12 @@ dimension: id {
     value_format_name: eur_0
   }
 
+  measure: average_rental {
+    type: average
+    sql: ${price} ;;
+    value_format_name: eur_0
+  }
+
   measure: count {
     type: count
     drill_fields: [listings.id, listings.name, listings.host_name]
