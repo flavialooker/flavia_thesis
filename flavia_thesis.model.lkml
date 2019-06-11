@@ -83,6 +83,12 @@ explore: airbnb_room_type_avg_rental {
   }
 }
 
-explore: gambiarradeucerto {}
+explore: gambiarradeucerto {
+  join: listings {
+    type: left_outer
+    sql_on: ${gambiarradeucerto.host_id} = ${listings.host_id} ;;
+    relationship: many_to_many
+  }
+}
 
 explore: daft {}
