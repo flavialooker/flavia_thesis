@@ -22,8 +22,59 @@ dimension: id {
       day_of_week,
       day_of_week_index,
       year]
-    datatype: date
-    sql: ${TABLE}.date ;;
+#     datatype: date
+    sql:TIMESTAMP(${TABLE}.date) ;;
+  }
+
+# filter determining time range for all "A" measures
+  filter: timeframe_a {
+    type: date_time
+  }
+#   flag for "A" measures to only include appropriate time range
+  dimension: group_a_yesno {
+    hidden: yes
+    type: yesno
+    sql: {% condition timeframe_a %} ${calendar_raw} {% endcondition %} ;;
+  }
+#   filtered measure A
+  measure: count_a {
+    label: "Winter"
+    type: average
+    sql: ${price} ;;
+    value_format_name: eur_0
+    filters: {
+      field: group_a_yesno
+      value: "yes"
+    }
+  }
+#   filter determining time range for all "B" measures
+  filter: timeframe_b {
+    type: date_time
+  }
+#   flag for "B" measures to only include appropriate time range
+  dimension: group_b_yesno {
+    hidden: yes
+    type: yesno
+    sql: {% condition timeframe_b %} ${calendar_raw} {% endcondition %} ;;
+  }
+
+  measure: count_b {
+    label: "Summer"
+    type: average
+    sql: ${price} ;;
+    value_format_name: eur_0
+    filters: {
+      field: group_b_yesno
+      value: "yes"
+    }
+  }
+
+  dimension: is_in_time_a_or_b {
+    group_label: "Time Comparison Filters"
+    type: yesno
+    sql:
+    {% condition timeframe_a %} ${calendar_raw} {% endcondition %} OR
+    {% condition timeframe_b %} ${calendar_raw} {% endcondition %} ;;
   }
 
   dimension: listing_id {

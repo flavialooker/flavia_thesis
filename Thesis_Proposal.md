@@ -11,8 +11,7 @@ I was a host myself on Airbnb for a period of time and if I had access to this t
 <li>Prices changes according to neighbourhoods and number of available listings. </li>
 <li>If a specific location has a very high number of listing, is there any characteristic in the area that might be contributing to this</li>
 <li>The average price for distinct listings offerings (single, private room or entire home)</li>
-<li>Is that a specific time of the year that is most likely to be fully booked and, if yes, are the prices changeable according to such events?</li>
+<li>Are the prices changeable according to seasons of Events in Town?</li>
 <li>What’s the highest occupancy neighbourhood and lowest?</li>
-<li>What good and bad reviews could say about the listing and hosts</li>
 <li>What is the monthly average in Airbnb Listing compared to Daft.ie</li>
 <li><small>Any other trends?</li></small>

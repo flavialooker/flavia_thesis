@@ -36,6 +36,11 @@ explore: calendar {
     sql_on: ${calendar.listing_id} = ${listings.id} ;;
     relationship: many_to_one
   }
+  join: daft {
+    type: full_outer
+    sql_on: ${calendar.calendar_quarter} = ${daft.quarter} ;;
+    relationship: many_to_many
+  }
 }
 
 explore: listings {
@@ -69,3 +74,15 @@ join: listings {
   relationship: many_to_one
  }
 }
+
+explore: airbnb_room_type_avg_rental {
+  join: daft {
+    type: full_outer
+    sql_on: ${airbnb_room_type_avg_rental.calendar_calendar_quarter} = ${daft.quarter} ;;
+    relationship: many_to_many
+  }
+}
+
+explore: gambiarradeucerto {}
+
+explore: daft {}

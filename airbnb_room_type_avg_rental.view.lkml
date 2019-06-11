@@ -34,12 +34,15 @@ view: airbnb_room_type_avg_rental {
   dimension: calendar_sum_rental {
     type: number
     sql: ${TABLE}.calendar_sum_rental ;;
+    value_format_name: eur_0
   }
 
   dimension: calendar_average_rental {
     type: number
     sql: ${TABLE}.calendar_average_rental ;;
+    value_format_name: eur_0
   }
+
 
   set: detail {
     fields: [listings_room_type, calendar_calendar_quarter, calendar_sum_rental, calendar_average_rental]

@@ -7,6 +7,12 @@ view: listings {
     sql: ${TABLE}.id ;;
   }
 
+  dimension: Daft_listing_count {
+    label: "Daft Listings Dublin"
+    type: string
+    sql: "2200" ;;
+  }
+
   dimension: access {
     type: string
     sql: ${TABLE}.access ;;
@@ -334,7 +340,19 @@ view: listings {
   dimension: host_name {
     type: string
     sql: ${TABLE}.host_name ;;
-  }
+    }
+
+
+#   dimension: host_url_teste {
+#     type: string
+#     sql: ${TABLE}.host_url ;;
+#     link: {
+#       label: "Airbnb"
+#       url: "{{value}}"
+#       icon_url: "https://www.airbnb.com/favicon.ico"
+#     }
+#   }
+
 
   dimension: host_neighbourhood {
     type: string
@@ -393,6 +411,37 @@ view: listings {
     type: string
     sql: ${TABLE}.host_url ;;
   }
+
+#   dimension: host_url_teste {
+#     type: string
+#     sql: ${TABLE}.host_url ;;
+#     link: {
+#       label: "Airbnb"
+#       url: "{{value}}"
+#       icon_url: "https://www.airbnb.com/favicon.ico"
+#     }
+#   }
+#
+#   dimension: host_url_test2 {
+#     type: string
+#     sql: ${TABLE}.host_url ;;
+#     html:<a href="{{ value }}">{{ value }}</a> ;;
+#   }
+
+  dimension: host_url_test3 {
+    label: "Host Profile"
+    type: string
+    sql: ${TABLE}.host_url ;;
+    html:<a href="{{ value }}">Link</a> ;;
+  }
+
+#   dimension: host_url_link {
+#     label: "Host Profile"
+#     type: string
+#     sql: ${TABLE}.host_url ;;
+#     html:<a href="{{ value }}">URL</a> ;;
+#   }
+
 
   dimension: host_verifications {
     type: string
@@ -482,6 +531,17 @@ dimension: listings_location {
   dimension: listing_url {
     type: string
     sql: ${TABLE}.listing_url ;;
+  }
+
+  dimension: listing_airbnb_link{
+    label: "Airbnb URL"
+     type: string
+    sql: ${TABLE}.listing_url ;;
+    link: {
+      label: "Airbnb"
+      url: "{{value}}"
+      icon_url: "https://www.airbnb.com/favicon.ico"
+    }
   }
 
   dimension: longitude {
@@ -707,6 +767,7 @@ dimension: listings_location {
   dimension: price {
     type: number
     sql: ${TABLE}.price ;;
+    value_format_name: eur_0
   }
 
   measure: first_quartile {
@@ -772,8 +833,7 @@ dimension: listings_location {
   measure: Sum_reviews {
     type: sum
     sql: ${number_of_reviews} ;;
-    drill_fields: [id, host_name, review_scores_rating, reviews.comments, review_scores_accuracy,
-      review_scores_checkin, review_scores_cleanliness, review_scores_location, review_scores_value]
+    drill_fields: [host_name, host_picture, host_started_year, description, room_type, neighbourhood, review_scores_rating, listing_airbnb_link]
   }
   measure: total_reviews_per_month {
     type: sum
@@ -785,9 +845,13 @@ measure: sum_price {
   sql: ${price} ;;
 }
 
+measure: sum_total_host_listing {
+  type: sum_distinct
+  sql:  ${TABLE}.host_total_listings_count ;;
+
+}
 measure: sum_rating {
   type: sum
   sql: ${review_scores_rating} ;;
 }
-
 }
