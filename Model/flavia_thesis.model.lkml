@@ -97,8 +97,8 @@ explore: gambiarradeucerto {
   }
 }
 
-# explore: daft {}
-#
-# explore: videos_br {}
-#
-# explore: lookml_liquids_dt {}
+explore: daft {}
+
+explore: videos_br {}
+
+explore: lookml_liquids_dt {}
