@@ -15,3 +15,11 @@ I was a host myself on Airbnb for a period of time and if I had access to this t
 <li>What’s the highest occupancy neighbourhood and lowest?</li>
 <li>What is the monthly average in Airbnb Listing compared to Daft.ie</li>
 <li><small>Any other trends?</li></small>
+
+<br>
+<br>
+
+<img src="https://www.w3schools.com/tags/smiley.gif" alt="Smiley face" width="42" height="42">
+<br>
+<br>
+<img src="https://i.imgur.com/6u8yolM.jpg" alt="Baby Tigger" width="400" height="400">

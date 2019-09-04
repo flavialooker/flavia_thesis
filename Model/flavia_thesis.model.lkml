@@ -1,10 +1,10 @@
 connection: "lookerdata_publicdata_standard_sql"
 
 # include all the views
-include: "*.view"
+include: "/**/*.view"
 
 map_layer: dublin_map {
-  file: "map.topojson"
+  file: "/maps/map.topojson"
 }
 explore: dublin_regions {
   join: listings {
@@ -44,6 +44,12 @@ explore: calendar {
 }
 
 explore: listings {
+  always_filter: {
+    filters: {
+      field: neighbourhood
+      value: "-Docklands"
+    }
+  }
   join:calendar {
     type: left_outer
     sql_on: ${listings.id} = ${calendar.listing_id} ;;
@@ -91,4 +97,8 @@ explore: gambiarradeucerto {
   }
 }
 
-explore: daft {}
+# explore: daft {}
+#
+# explore: videos_br {}
+#
+# explore: lookml_liquids_dt {}

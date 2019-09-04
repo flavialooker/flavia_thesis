@@ -1,6 +1,7 @@
 view: listings {
   sql_table_name: Flavia.listings ;;
 
+
   dimension: id {
     primary_key: yes
     type: number
@@ -35,8 +36,9 @@ view: listings {
 
   dimension: availability_365 {
     type: number
-    sql: ${TABLE}.availability_365 ;;
-  }
+    sql: ${TABLE}.availability_365;;
+    }
+
 
   dimension: availability_60 {
     type: number
@@ -45,8 +47,12 @@ view: listings {
 
   dimension: availability_90 {
     type: number
-    sql: ${TABLE}.availability_90 ;;
-  }
+    value_format: "0.#####"
+    sql: ${TABLE}.availability_90 * 1.11111102634;;
+#     html: {{ rendered_value }} ;;
+
+
+   }
 
   dimension: bathrooms {
     type: number
@@ -282,6 +288,14 @@ view: listings {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.first_review ;;
+  }
+
+  dimension_group: duration_test {
+    type: duration
+    intervals: [day,hour]
+    datatype: date
+    sql_start: ${first_review_raw} ;;
+    sql_end: ${host_started_raw} ;;
   }
 
   dimension: guests_included {
@@ -588,8 +602,25 @@ dimension: listings_location {
   dimension: neighbourhood {
     type: string
     sql: ${TABLE}.neighbourhood ;;
-    # map_layer_name: dublin_map
+    link: {
+      label: "{{value}} Region Drill"
+      url: "/dashboards/399?Neighbourhood={{ value }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] | url_encode }}"
+    }
+
+    link: {
+      label: "Drill Explore"
+      url: "/explore/flavia_thesis/listings?fields=listings.host_name,listings.neighbourhood,listings.average_price&f[listings.neighbourhood]={{ value | url_encode }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] }}&f[listings.host_is_superhost]={{ listings.host_is_superhost }}"
   }
+  }
+
+#   or url: "/explore/flavia_thesis/listings?fields=listings.host_name,listings.neighbourhood,listings.average_price&f[listings.neighbourhood]={{ value | url_encode }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] }}&f[listings.host_is_superhost]=Yes"
+
+#       link: {
+#         label:"{{value}} Region Drill"
+#         url:"/looks/1365?&f[listings.neighbourhood]={{ value }}"
+#       }
+#     }
+
 
   parameter: max_rank {
     type: number
@@ -767,7 +798,7 @@ dimension: listings_location {
   dimension: price {
     type: number
     sql: ${TABLE}.price ;;
-    value_format_name: eur_0
+    value_format: "0\"€\""
   }
 
   measure: first_quartile {
@@ -804,10 +835,14 @@ dimension: listings_location {
 
   measure: listings_count{
     type: count_distinct
+    # filters:{
+    # field: neighbourhood
+    # value: "Drumcondra"
+    # }
     drill_fields: [id,host_name, neighbourhood, beds,host_started_date,price]
     sql: ${id} ;;
-  }
-
+  # html: <p style=“color: grey; font-family: OpenSans; background-color:white; text-align:centre; font-size: 50%“>Coverage Rate </p> {{ rendered_value }} ;;
+}
   measure: average_price {
     type: average
     sql: ${price} ;;

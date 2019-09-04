@@ -4,6 +4,7 @@ view: gambiarradeucerto {
     sql: SELECT
           Distinct host_id,
           host_name,
+          host_since,
           host_picture_url,
           host_listings_count,
           REGEXP_EXTRACT(host_picture_url, ".*jpg") as host_url
@@ -39,6 +40,11 @@ view: gambiarradeucerto {
   dimension: host_url {
     type: string
     sql: ${TABLE}.host_url ;;
+  }
+
+  dimension: host_since {
+    type: date
+    sql: ${TABLE}.host_since ;;
   }
 
   dimension: host_picture {

@@ -26,6 +26,7 @@ dimension: id {
     sql:TIMESTAMP(${TABLE}.date) ;;
   }
 
+
 # filter determining time range for all "A" measures
   filter: timeframe_a {
     type: date_time
@@ -125,5 +126,10 @@ dimension: id {
   measure: count {
     type: count
     drill_fields: [listings.id, listings.name, listings.host_name]
+  }
+
+  dimension: test {
+    type: number
+    sql: DATE_DIFF(${calendar_date},CURRENT_DATE(),DAY) ;;
   }
 }
