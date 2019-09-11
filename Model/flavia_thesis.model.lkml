@@ -2,6 +2,7 @@ connection: "lookerdata_publicdata_standard_sql"
 
 # include all the views
 include: "/**/*.view"
+include: "/dashboards/*.dashboard.lookml"
 
 map_layer: dublin_map {
   file: "/maps/map.topojson"

@@ -889,4 +889,18 @@ measure: sum_rating {
   type: sum
   sql: ${review_scores_rating} ;;
 }
+
+dimension: drill_look_test {
+ type: string
+sql: ${TABLE}.space ;;
+    html:
+    {% if street._in_query %}
+    <a href= "https://productday.dev.looker.com/looks/298">{{value}}</a>
+      {% elsif city._in_query %}
+      <a href= "https://productday.dev.looker.com/looks/696">{{value}}</a>
+      {% else %}
+        {{value}}}
+      {% endif %}
+;;
+  }
 }

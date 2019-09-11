@@ -17,6 +17,7 @@ dimension: id {
       raw,
       date,
       week,
+      week_of_year,
       month,
       quarter,
       day_of_week,
@@ -26,6 +27,32 @@ dimension: id {
     sql:TIMESTAMP(${TABLE}.date) ;;
   }
 
+  parameter: date_granularity {
+    type: string
+    allowed_value: { label: "By Weekly" value: "Weekly" }
+    allowed_value: { label: "By Monthly" value: "Monthly" }
+  }
+
+  dimension: date_test {
+    sql:
+    {% if date_granularity._parameter_value == "'Weekly'" %}
+    ${calendar_week_of_year}
+    {% elsif date_granularity._parameter_value == "'Monthly'" %}
+    ${calendar_month}
+    {% else %}
+    ${calendar_date}
+    {% endif %};;
+
+      html:
+          {% if date_granularity._parameter_value == "'Weekly'" %}
+          {{ rendered_value | append: "W"}}
+          {% elsif date_granularity._parameter_value == "'Monthly'" %}
+          {{ rendered_value | append: "-01" | date: "%B %Y" }}
+          {% else %}
+          date
+          {% endif %}
+          ;;
+    }
 
 # filter determining time range for all "A" measures
   filter: timeframe_a {
