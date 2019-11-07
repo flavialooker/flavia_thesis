@@ -1,3 +1,11 @@
+
+---
+navigation:
+  - Thesis_Proposal
+  - document_2
+
+---
+
 # Thesis Proposal
 
 Airbnb was founded in 2008 and quickly became a popular platform to provide people with places to rent in towns and cities in 191 countries. Through the Airbnb peer to peer platform people could easily connect to monetise spare space and unlock a world of accommodation options to willing travellers. The Airbnb platform also now offers experiences, but for the purpose of this Thesis, we will only include data on the accommodation listed on the platform.

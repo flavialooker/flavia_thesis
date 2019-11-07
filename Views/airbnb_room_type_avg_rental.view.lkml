@@ -3,6 +3,7 @@ view: airbnb_room_type_avg_rental {
     sql: SELECT
         listings.room_type  AS listings_room_type,
         FORMAT_TIMESTAMP('%Y-%m', TIMESTAMP_TRUNC(CAST(CAST(calendar.date  AS TIMESTAMP) AS TIMESTAMP), QUARTER)) AS calendar_calendar_quarter,
+        CAST(TIMESTAMP(calendar.date)  AS DATE) AS calendar_calendar_date,
         COALESCE(SUM(calendar.price ), 0) AS calendar_sum_rental,
         AVG(calendar.price ) AS calendar_average_rental
       FROM Flavia.calendar  AS calendar
@@ -10,7 +11,7 @@ view: airbnb_room_type_avg_rental {
 
       WHERE
         NOT (calendar.listing_id  = 27063211)
-      GROUP BY 1,2
+      GROUP BY 1,2,3
       ORDER BY 1 DESC
       LIMIT 500
        ;;

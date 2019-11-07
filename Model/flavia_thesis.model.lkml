@@ -97,6 +97,8 @@ explore: gambiarradeucerto {
     relationship: many_to_many
   }
 }
+explore: lookml_generated_dt {}
+
 
 explore: daft {}
 

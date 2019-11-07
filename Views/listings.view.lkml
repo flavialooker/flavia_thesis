@@ -290,6 +290,13 @@ view: listings {
     sql: ${TABLE}.first_review ;;
   }
 
+
+  dimension: is_first_review_in_the_past_90days {
+    type: yesno
+    sql: DATE_DIFF(listings.first_review, CURRENT_DATE(), DAY) < 90 ;;
+    }
+
+
   dimension_group: duration_test {
     type: duration
     intervals: [day,hour]
@@ -841,6 +848,12 @@ dimension: listings_location {
     # }
     drill_fields: [id,host_name, neighbourhood, beds,host_started_date,price]
     sql: ${id} ;;
+    html: {% if value == 10000 %}
+        <font color="#42a338 ">{{ rendered_value }}</font>
+      {% else %}
+        <font color="#ffb92e ">{{ rendered_value }}</font>
+      {% endif %};;
+
   # html: <p style=“color: grey; font-family: OpenSans; background-color:white; text-align:centre; font-size: 50%“>Coverage Rate </p> {{ rendered_value }} ;;
 }
   measure: average_price {
