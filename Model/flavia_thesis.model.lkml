@@ -100,8 +100,8 @@ explore: gambiarradeucerto {
 explore: lookml_generated_dt {}
 
 
-# explore: daft {}
+explore: daft {}
 
-# explore: videos_br {}
+explore: videos_br {}
 
-# explore: lookml_liquids_dt {}
+explore: lookml_liquids_dt {}

@@ -19,10 +19,10 @@ view: listings {
     sql: ${TABLE}.access ;;
   }
 
-  # dimension: accommodates {
-  #   type: number
-  #   sql: ${TABLE}.accommodates ;;
-  # }
+  dimension: accommodates {
+    type: number
+    sql: ${TABLE}.accommodates ;;
+  }
 
   dimension: amenities {
     type: string
