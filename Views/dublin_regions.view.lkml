@@ -1,6 +1,7 @@
 view: dublin_regions {
   sql_table_name: Flavia.dublin_regions ;;
 
+
   dimension: id {
     primary_key: yes
     type: number
@@ -10,6 +11,7 @@ view: dublin_regions {
   dimension: is_location_exact {
     type: yesno
     sql: ${TABLE}.is_location_exact ;;
+    view_label: "Listings"
   }
 
   dimension: latitude {
@@ -24,7 +26,7 @@ view: dublin_regions {
 
   dimension: neighbourhood {
     type: string
-    # map_layer_name: dublin_map
+    map_layer_name: dublin_map
     sql: ${TABLE}.neighbourhood ;;
 
   }
@@ -38,5 +40,10 @@ view: dublin_regions {
   measure: count {
     type: count
     drill_fields: [id]
+    html: {% if value == 100 %}
+    <p style="background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% else %}
+    <p style="background-color: lightgreen; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% endif %};;
   }
 }

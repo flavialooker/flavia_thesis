@@ -5,8 +5,7 @@ view: lookml_generated_dt {
   CAST(CAST(listings.host_since  AS TIMESTAMP) AS DATE) AS host_since_date
 FROM Flavia.listings  AS listings
    WHERE {% condition date_filter %} CAST(listings.host_since AS TIMESTAMP) {% endcondition %}
-  AND
-      {% condition values_suggestions %} host_name {% endcondition %}
+   AND {% condition values_suggestions %} host_name {% endcondition %}
 
 
 
@@ -18,12 +17,11 @@ FROM Flavia.listings  AS listings
 filter: date_filter {
   type: date
 }
-#
 
-filter: values_suggestions {
-  type: string
-  suggest_dimension: host_name
-}
+  filter: values_suggestions {
+    type: string
+    suggest_dimension: host_name
+  }
 
   parameter: group_parameter {
     type: string
@@ -54,7 +52,7 @@ filter: values_suggestions {
 
   dimension: host_since_date {
     type: date
-    sql: ${TABLE}.host_since_date ;;
+    sql: CAST(${TABLE}.host_since_date as Timestamp) ;;
   }
 
   set: detail {

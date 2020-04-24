@@ -23,15 +23,35 @@ dimension: id {
       day_of_week,
       day_of_week_index,
       year]
-#     datatype: date
-    sql:TIMESTAMP(${TABLE}.date) ;;
+    sql: ${TABLE}.date ;;
+    datatype: date
+#     sql:TIMESTAMP(${TABLE}.date) ;;
+#     html: <p <font color="#000000 "style="font-size:20px">{{ value}}</p> </font> ;;
   }
+
+  #COUNT OF DAY FROM FILTER INPUT
+  dimension: num_days {
+    type: number
+    sql: DATE_DIFF({% date_end calendar_date %}, {% date_start calendar_date %}, DAY) ;;
+  }
+
+  measure: calculation_from_date_diff {
+    type: number
+    sql: ${count}/${num_days} ;;
+  }
+
+
+
+
+
+##########################################-------------------#####################################
 
   parameter: date_granularity {
     type: string
     allowed_value: { label: "By Weekly" value: "Weekly" }
     allowed_value: { label: "By Monthly" value: "Monthly" }
   }
+
 
   dimension: date_test {
     sql:
@@ -40,18 +60,18 @@ dimension: id {
     {% elsif date_granularity._parameter_value == "'Monthly'" %}
     ${calendar_month}
     {% else %}
-    ${calendar_date}
+    ${calendar_raw}
     {% endif %};;
 
-      html:
-          {% if date_granularity._parameter_value == "'Weekly'" %}
-          {{ rendered_value | append: "W"}}
-          {% elsif date_granularity._parameter_value == "'Monthly'" %}
-          {{ rendered_value | append: "-01" | date: "%B %Y" }}
-          {% else %}
-          date
-          {% endif %}
-          ;;
+      # html:
+      #     {% if date_granularity._parameter_value == "'Weekly'" %}
+      #     {{ rendered_value | append: "W"}}
+      #     {% elsif date_granularity._parameter_value == "'Monthly'" %}
+      #     {{ rendered_value | append: "-01" | date: "%B %Y" }}
+      #     {% else %}
+      #     date
+      #     {% endif %}
+      #     ;;
     }
 
 # filter determining time range for all "A" measures
@@ -148,6 +168,11 @@ dimension: id {
     type: average
     sql: ${price} ;;
     value_format_name: eur_0
+  }
+
+  measure: avantika_test {
+    type: count_distinct
+    sql: ${calendar_day_of_week_index} ;;
   }
 
   measure: count {

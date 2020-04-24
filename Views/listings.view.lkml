@@ -1,4 +1,4 @@
-view: listings {
+view:listings {
   sql_table_name: Flavia.listings ;;
 
 
@@ -6,6 +6,16 @@ view: listings {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+  }
+
+  dimension: hard_code_test{
+    type: string
+    sql: case when 1=1 then "Test" else null end ;;
+  }
+
+  dimension: hard_code_test_2{
+    sql: 1 ;;
+    html: Test ;;
   }
 
   dimension: Daft_listing_count {
@@ -18,6 +28,7 @@ view: listings {
     type: string
     sql: ${TABLE}.access ;;
   }
+
 
   dimension: accommodates {
     type: number
@@ -61,13 +72,49 @@ view: listings {
 
   dimension: bed_type {
     type: string
-    sql: ${TABLE}.bed_type ;;
+    sql: ${TABLE}.bed_type;;
+
   }
+
+  parameter: dimension_suggestions {
+    type: string
+    suggest_dimension: bed_type
+  }
+
+  dimension: filterd_value_test {
+    type: string
+    sql: {% if dimension_suggestions._parameter_value  == "'Real Bed'" %}
+      ${bed_type}
+     {% elsif dimension_suggestions._parameter_value  == "'Couch'" %}
+    ${bedrooms}
+    {% else  %}
+     null
+    {% endif %} ;;
+    }
+  #sql: ${bed_type} ;;
+#  html:{% if _filters['listings.bed_type'] == "Real Bed" %}
+#     {{rendered_value}}
+#     {% elsif _filters['listings.bed_type'] == "Couch" %}
+#     {{ listings.bedrooms._value }}
+#     {% else %}
+#     {{ listings.bathrooms._value }}
+#     {% endif %};;
+#   }
+
+
+
+
+
+
+
+
 
   dimension: bedrooms {
     type: number
     sql: ${TABLE}.bedrooms ;;
   }
+
+
 
   dimension: beds {
     type: number
@@ -93,7 +140,16 @@ view: listings {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.calendar_last_scraped ;;
+
   }
+
+#   dimension: html_quarter {
+#     type: string
+#     sql: ${calendar_last_scraped_quarter} ;;
+#     html: {% if value == "'2018-Q3'" %}
+#         Q3
+#    {% endif %};;
+#   }
 
   dimension: calendar_updated {
     type: string
@@ -356,6 +412,22 @@ view: listings {
   dimension: host_location {
     type: string
     sql: ${TABLE}.host_location ;;
+    map_layer_name: uk_postal_districts
+  }
+
+  dimension: english_province_name {
+    type: string
+    map_layer_name: canadian_provinces
+  }
+
+  dimension: test_split_liquid {
+    sql:${host_location} ;;
+    html: {% if host_location._value contains 'United States' %}
+    United States
+    {% elsif host_location._value contains 'Germany' %}
+    Germany
+    {% endif %} ;;
+
   }
 
   dimension: host_name {
@@ -594,7 +666,14 @@ dimension: listings_location {
   dimension: monthly_price {
     type: number
     sql: ${TABLE}.monthly_price ;;
+    html:
+    {% if listings.monthly_price._is_filtered %}
+    <font color="darkgreen">{{value}}</font>
+    {% else %}
+    {{value}}
+    {% endif %};;
   }
+
 
   dimension: name {
     type: string
@@ -609,15 +688,15 @@ dimension: listings_location {
   dimension: neighbourhood {
     type: string
     sql: ${TABLE}.neighbourhood ;;
-    link: {
-      label: "{{value}} Region Drill"
-      url: "/dashboards/399?Neighbourhood={{ value }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] | url_encode }}"
-    }
+#      link: {
+#        label: "{{value}} Region Drill"
+#         url: "/dashboards/399?Neighbourhood={{ value }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] | url_encode }}"
+#      }
 
-    link: {
-      label: "Drill Explore"
-      url: "/explore/flavia_thesis/listings?fields=listings.host_name,listings.neighbourhood,listings.average_price&f[listings.neighbourhood]={{ value | url_encode }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] }}&f[listings.host_is_superhost]={{ listings.host_is_superhost }}"
-  }
+#      link: {
+#        label: "Drill Explore"
+#        url: "/explore/flavia_thesis/listings?fields=listings.host_name,listings.neighbourhood,listings.average_price&f[listings.neighbourhood]={{ value | url_encode }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] }}&f[listings.host_is_superhost]={{ listings.host_is_superhost }}"
+#    }
   }
 
 #   or url: "/explore/flavia_thesis/listings?fields=listings.host_name,listings.neighbourhood,listings.average_price&f[listings.neighbourhood]={{ value | url_encode }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] }}&f[listings.host_is_superhost]=Yes"
@@ -653,6 +732,10 @@ dimension: listings_location {
   dimension: notes {
     type: string
     sql: ${TABLE}.notes ;;
+   html:{% assign words = {{value}} | split: ' ' %}
+    {% for word in words %}
+    {{ word | capitalize }}
+    {% endfor %} ;;
   }
 
   dimension: number_of_reviews {
@@ -668,6 +751,11 @@ dimension: listings_location {
   dimension: property_type {
     type: string
     sql: ${TABLE}.property_type ;;
+  }
+
+  measure: concat_test {
+    type: string
+    sql: CONCAT(${property_type},' ',' ','-',' ', '-', ' ', CAST(${sum_price} AS STRING)) ;;
   }
 
   dimension: require_guest_phone_verification {
@@ -731,6 +819,8 @@ dimension: listings_location {
   dimension: room_type {
     type: string
     sql: ${TABLE}.room_type ;;
+    html: <p>This is the room type selected by the customer: {{rendered_value}}</p> ;;
+    #workaround to add description to tooltip (aka hover)
   }
 
   dimension: scrape_id {
@@ -813,6 +903,7 @@ dimension: listings_location {
     percentile: 25
     sql: ${price} ;;
   }
+
   measure: third_quartile {
     type: percentile
     percentile: 75
@@ -835,10 +926,17 @@ dimension: listings_location {
     sql: ${price} ;;
   }
 
-#   measure: count {
-#     type: count
-#     drill_fields: [id, name, host_name, neighbourhood, calendar.count, reviews.count]
-#   }
+  measure: count {
+    type: count
+    drill_fields: [id, name, host_name, neighbourhood, calendar.count, reviews.count]
+  }
+
+  measure: ave_count {
+    type: number
+    sql: AVG(${count}) ;;
+
+  }
+
 
   measure: listings_count{
     type: count_distinct
@@ -848,11 +946,17 @@ dimension: listings_location {
     # }
     drill_fields: [id,host_name, neighbourhood, beds,host_started_date,price]
     sql: ${id} ;;
-    html: {% if value == 10000 %}
-        <font color="#42a338 ">{{ rendered_value }}</font>
-      {% else %}
-        <font color="#ffb92e ">{{ rendered_value }}</font>
-      {% endif %};;
+   html: {% if value == 10000 %}
+      <p style="background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% else %}
+      <p style="background-color: lightgreen; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% endif %};;
+
+#     html: {% if value == 10000 %}
+#         <font color="#42a338 ">{{ rendered_value }}</font>
+#       {% else %}
+#         <font color="#ffb92e ">{{ rendered_value }}</font>
+#       {% endif %};;
 
   # html: <p style=“color: grey; font-family: OpenSans; background-color:white; text-align:centre; font-size: 50%“>Coverage Rate </p> {{ rendered_value }} ;;
 }
@@ -860,6 +964,12 @@ dimension: listings_location {
     type: average
     sql: ${price} ;;
     value_format_name: eur
+      # action: {
+      #   label: "Send email"
+      #   url: "https://example.com/posts"
+      #   icon_url: "https://previews.123rf.com/images/mamanamsai/mamanamsai1501/mamanamsai150100386/35929070-email-icon-on-blue-background-clean-vector.jpg"
+      #   form_url: "https://example.com/ping/{{ value }}/form.json"
+      #   }
     drill_fields: [id,host_name, neighbourhood, amenities, beds,average_price,price]
   }
 
@@ -893,6 +1003,16 @@ measure: sum_price {
   sql: ${price} ;;
 }
 
+measure: test_html_dup_sum {
+  type: sum
+  sql: ${price} ;;
+  html:  {% if value > 2000 %}
+     {{ calendar_last_scraped_date._value }}
+    {% else %}
+   {{ sum_price._value }}
+    {% endif %} ;;
+}
+
 measure: sum_total_host_listing {
   type: sum_distinct
   sql:  ${TABLE}.host_total_listings_count ;;
@@ -917,3 +1037,38 @@ sql: ${TABLE}.space ;;
 ;;
   }
 }
+
+
+#ADD TO TEST
+
+# parameter: filter_by {
+#   type: number
+#   allowed_value: {
+#     label: "Category"
+#     value: "0"
+#   }
+#   allowed_value: {
+#     label: "Sub Category"
+#     value: "1"
+#   }
+#   allowed_value: {
+#     label: "Product"
+#     value: "2"
+#   }
+# }
+
+
+# dimension: dynamic_product {
+#   label: "Dynamic Product"
+#   type: string
+#   sql: {% if filter_by._parameter_value == '0' %}
+#     ${product_category}
+#     {% elsif filter_by._parameter_value == '1' %}
+#     ${product_sub_category}
+#     {% elsif filter_by._parameter_value == '2' %}
+#     ${product_name}
+#     {% else %}
+#     ${product_category}
+#     {% endif %} ;;
+
+#   }

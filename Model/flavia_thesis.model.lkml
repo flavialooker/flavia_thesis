@@ -4,10 +4,35 @@ connection: "lookerdata_publicdata_standard_sql"
 include: "/**/*.view"
 include: "/dashboards/*.dashboard.lookml"
 
+label: "Bank Consumers Test"
+
 map_layer: dublin_map {
   file: "/maps/map.topojson"
 }
+
+map_layer: canadian_provinces {
+  format: "vector_tile_region"
+  url: "https://a.tiles.mapbox.com/v4/looker-maps.oh_canada/{z}/{x}/{y}.mvt?access_token=@{mapbox_api_key}"
+  feature_key: "provinces"
+  extents_json_url: "https://rawcdn.githack.com/dwmintz/looker_map_layers/c98a443cfd7dc93191a3f3f6c54059b9a35a9134/canada_provinces.json"
+  min_zoom_level: 2
+  max_zoom_level: 10
+  property_key: "PRENAME"
+}
+
+map_layer: uk_postal_districts {
+  format: "vector_tile_region"
+  url: "https://a.tiles.mapbox.com/v4/looker-maps.63tiis35/{z}/{x}/{y}.mvt?access_token=@{mapbox_api_key}"
+  feature_key: "PostalDistrict-5b1t0d"
+  extents_json_url: "https://rawcdn.githack.com/dwmintz/looker_map_layers/6b7c7cff6d193189cca4f73b314f558e8ee58f85/uk_postal_districts.json"
+  min_zoom_level: 8
+  max_zoom_level: 13
+  property_key: "PostDist"
+}
+
+
 explore: dublin_regions {
+  label: "Account Sctructure"
   join: listings {
     type: left_outer
     sql_on: ${dublin_regions.id}=${listings.id} ;;
@@ -99,6 +124,7 @@ explore: gambiarradeucerto {
 }
 explore: lookml_generated_dt {}
 
+explore: concact_test {}
 
 explore: daft {}
 
