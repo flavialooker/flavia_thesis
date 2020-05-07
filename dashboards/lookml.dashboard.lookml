@@ -1,5 +1,6 @@
 - dashboard: lookml_dahsboard_test
   title: Lookml dahsboard test
+  description: my description test
   layout: newspaper
   elements:
   - title: lookml dash test

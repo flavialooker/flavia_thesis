@@ -158,6 +158,13 @@ dimension: id {
       value: "yes"
     }
   }
+
+  measure: negative_values_for_testing{
+    type: number
+    sql: ${available_listings} - 100 ;;
+
+  }
+
   measure: sum_rental {
     type: sum
     sql: ${price} ;;
