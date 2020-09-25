@@ -38,16 +38,18 @@ explore: dublin_regions {
     sql_on: ${dublin_regions.id}=${listings.id} ;;
     relationship: one_to_one
   }
-#   join: calendar {
-#     type: left_outer
-#     sql_on: ${dublin_regions.id}= ${calendar.listing_id} ;;
-#     relationship: one_to_one
-#   }
+  join: calendar {
+    type: left_outer
+    sql_on: ${dublin_regions.id}= ${calendar.listing_id} ;;
+    relationship: one_to_one
+  }
   join: reviews {
     type: left_outer
     sql_on: ${dublin_regions.id} = ${reviews.listing_id} ;;
     relationship: one_to_many
   }
+
+
 }
 
 explore: calendar {
@@ -119,6 +121,12 @@ explore: gambiarradeucerto {
   join: listings {
     type: left_outer
     sql_on: ${gambiarradeucerto.host_id} = ${listings.host_id} ;;
+    relationship: many_to_many
+  }
+
+  join: calendar {
+    type: left_outer
+    sql_on: ${calendar.id}=  ${gambiarradeucerto.host_id} ;;
     relationship: many_to_many
   }
 }

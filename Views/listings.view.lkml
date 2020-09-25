@@ -10,13 +10,14 @@ view:listings {
 
   dimension: hard_code_test{
     type: string
-    sql: case when 1=1 then "Test" else null end ;;
+    sql: case when 1=1 then "Learn more about your visitors" else null end ;;
+    html: <a href= "https://productday.dev.looker.com/looks/298">{{value}}</a> ;;
   }
 
-  dimension: hard_code_test_2{
-    sql: 1 ;;
-    html: Test ;;
-  }
+  # dimension: hard_code_test_2{
+  #   sql: Learn more about your visitors ;;
+  #   html: <a href= "https://productday.dev.looker.com/looks/298">{{value}}</a> ;;
+  # }
 
   dimension: Daft_listing_count {
     label: "Daft Listings Dublin"
@@ -78,7 +79,7 @@ view:listings {
 
   parameter: dimension_suggestions {
     type: string
-    suggest_dimension: bed_type
+    suggest_dimension: listings.bed_type
   }
 
   dimension: filterd_value_test {
@@ -688,25 +689,46 @@ dimension: listings_location {
   dimension: neighbourhood {
     type: string
     sql: ${TABLE}.neighbourhood ;;
-#      link: {
-#        label: "{{value}} Region Drill"
-#         url: "/dashboards/399?Neighbourhood={{ value }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] | url_encode }}"
-#      }
+      link: {
+        label: "{{value}} Region Drill"
+        url: "/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
+      }
 
 #      link: {
 #        label: "Drill Explore"
 #        url: "/explore/flavia_thesis/listings?fields=listings.host_name,listings.neighbourhood,listings.average_price&f[listings.neighbourhood]={{ value | url_encode }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] }}&f[listings.host_is_superhost]={{ listings.host_is_superhost }}"
 #    }
-  }
+  # }
 
 #   or url: "/explore/flavia_thesis/listings?fields=listings.host_name,listings.neighbourhood,listings.average_price&f[listings.neighbourhood]={{ value | url_encode }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] }}&f[listings.host_is_superhost]=Yes"
 
-#       link: {
-#         label:"{{value}} Region Drill"
-#         url:"/looks/1365?&f[listings.neighbourhood]={{ value }}"
-#       }
-#     }
+      link: {
+        label:"{{value}} Region Drill"
+        url:"/looks/1365?&f[listings.neighbourhood]={{ value }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] | url_encode }}"
+      }
+    }
 
+dimension: pass_dashboard_filter_to_Look{
+  label: "-"
+  case: {
+    when: {
+      label: "My First Link"
+      sql: 1=1 ;;
+    }
+    when: {
+      label: "My second link"
+      sql: 1=1 ;;
+    }
+    when: {
+      label: "My Third Link"
+      sql: 1=1 ;;
+    }
+  }
+  link: {
+    label:"{{value}} "
+    url:"/looks/1365?&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] | url_encode }}"
+  }
+}
 
   parameter: max_rank {
     type: number
@@ -732,7 +754,7 @@ dimension: listings_location {
   dimension: notes {
     type: string
     sql: ${TABLE}.notes ;;
-   html:{% assign words = {{value}} | split: ' ' %}
+  html:{% assign words = value | split: ' ' %}
     {% for word in words %}
     {{ word | capitalize }}
     {% endfor %} ;;
