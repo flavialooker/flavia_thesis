@@ -691,7 +691,7 @@ dimension: listings_location {
     sql: ${TABLE}.neighbourhood ;;
       link: {
         label: "{{value}} Region Drill"
-        url: "/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
+        url: "/embed/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
       }
 
 #      link: {
@@ -706,6 +706,8 @@ dimension: listings_location {
         label:"{{value}} Region Drill"
         url:"/looks/1365?&f[listings.neighbourhood]={{ value }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] | url_encode }}"
       }
+    drill_fields: [id,host_name, neighbourhood, amenities, beds,average_price,price]
+
     }
 
 dimension: pass_dashboard_filter_to_Look{
