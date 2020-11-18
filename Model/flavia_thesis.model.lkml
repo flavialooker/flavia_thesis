@@ -6,6 +6,12 @@ include: "/dashboards/*.dashboard.lookml"
 
 label: "Bank Consumers Test"
 
+
+access_grant: filter_field_only_test {
+  user_attribute: testy
+  allowed_values: [ "test" ]
+}
+
 map_layer: dublin_map {
   file: "/maps/map.topojson"
 }

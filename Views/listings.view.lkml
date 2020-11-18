@@ -400,7 +400,7 @@ view:listings {
   }
 
   dimension: host_is_superhost {
-    type: yesno
+  required_access_grants: [filter_field_only_test ]
     sql: ${TABLE}.host_is_superhost ;;
   }
 
@@ -691,8 +691,12 @@ dimension: listings_location {
     sql: ${TABLE}.neighbourhood ;;
       link: {
         label: "{{value}} Region Drill"
-        url: "/embed/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
+      #drill to embed dashboard to remove filters
+      # url: "/embed/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
+       # url: "/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
+        url: "/dashboards/399?Date={{ _filters['calendar.calendar_date'] }}"
       }
+
 
 #      link: {
 #        label: "Drill Explore"
