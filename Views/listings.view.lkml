@@ -74,12 +74,15 @@ view:listings {
   dimension: bed_type {
     type: string
     sql: ${TABLE}.bed_type;;
+    required_access_grants: [filter_field_only_test ]
 
   }
 
   parameter: dimension_suggestions {
     type: string
     suggest_dimension: listings.bed_type
+    required_access_grants: [filter_field_only_test ]
+
   }
 
   dimension: filterd_value_test {
@@ -400,6 +403,7 @@ view:listings {
   }
 
   dimension: host_is_superhost {
+    type: yesno
   required_access_grants: [filter_field_only_test ]
     sql: ${TABLE}.host_is_superhost ;;
   }
