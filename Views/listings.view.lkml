@@ -75,26 +75,30 @@ view:listings {
     type: string
     sql: ${TABLE}.bed_type;;
     required_access_grants: [filter_field_only_test ]
-
   }
 
-  parameter: dimension_suggestions {
+  dimension_group: testing_elliot {
+    sql:CASEWHEN {% condition dimension_suggestions %} ${bed_type} {% endcondition %}THEN
+    ${bed_type }ELSE "null" END ;;
+  }
+
+  filter: dimension_suggestions {
     type: string
     suggest_dimension: listings.bed_type
     required_access_grants: [filter_field_only_test ]
 
   }
 
-  dimension: filterd_value_test {
-    type: string
-    sql: {% if dimension_suggestions._parameter_value  == "'Real Bed'" %}
-      ${bed_type}
-     {% elsif dimension_suggestions._parameter_value  == "'Couch'" %}
-    ${bedrooms}
-    {% else  %}
-     null
-    {% endif %} ;;
-    }
+  # dimension: filterd_value_test {
+  #   type: string
+  #   sql: {% if dimension_suggestions._parameter_value  == "'Real Bed'" %}
+  #     ${bed_type}
+  #   {% elsif dimension_suggestions._parameter_value  == "'Couch'" %}
+  #   ${bedrooms}
+  #   {% else  %}
+  #   null
+  #   {% endif %} ;;
+  #   }
   #sql: ${bed_type} ;;
 #  html:{% if _filters['listings.bed_type'] == "Real Bed" %}
 #     {{rendered_value}}
