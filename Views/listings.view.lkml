@@ -78,8 +78,10 @@ view:listings {
   }
 
   dimension_group: testing_elliot {
-    sql:CASEWHEN {% condition dimension_suggestions %} ${bed_type} {% endcondition %}THEN
-    ${bed_type }ELSE "null" END ;;
+    sql:CASE WHEN {% condition dimension_suggestions %} ${bed_type} {% endcondition %}
+    THEN ${bed_type}
+    ELSE "null"
+    END ;;
   }
 
   filter: dimension_suggestions {
