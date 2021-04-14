@@ -84,7 +84,7 @@ explore: listings {
       value: "-Docklands"
     }
   }
-  join:calendar {
+  join: calendar {
     type: left_outer
     sql_on: ${listings.id} = ${calendar.listing_id} ;;
     relationship: one_to_many

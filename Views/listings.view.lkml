@@ -693,13 +693,20 @@ dimension: listings_location {
   dimension: neighbourhood {
     type: string
     sql: ${TABLE}.neighbourhood ;;
-      link: {
-        label: "{{value}} Region Drill"
-      #drill to embed dashboard to remove filters
+    html: <a href="/dashboards/399?Date={{ _filters['calendar.calendar_date'] }}"> {{value}} </a>;;
+
+      # link: {
+      #   label: "{{value}} Region Drill"
+      # #drill to embed dashboard to remove filters
       # url: "/embed/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
-       # url: "/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
-        url: "/dashboards/399?Date={{ _filters['calendar.calendar_date'] }}"
-      }
+      # }
+
+       #drill to regular dashboard example
+
+      #   url: "/dashboards/399?Neighbourhood={{ filterable_value | url_encode }}&Superhost={{ listings.host_is_superhost }}&Date={{ _filters['calendar.calendar_date'] }}"
+      # }
+
+
 
 
 #      link: {
@@ -710,10 +717,10 @@ dimension: listings_location {
 
 #   or url: "/explore/flavia_thesis/listings?fields=listings.host_name,listings.neighbourhood,listings.average_price&f[listings.neighbourhood]={{ value | url_encode }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] }}&f[listings.host_is_superhost]=Yes"
 
-      link: {
-        label:"{{value}} Region Drill"
-        url:"/looks/1365?&f[listings.neighbourhood]={{ value }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] | url_encode }}"
-      }
+      # link: {
+      #   label:"{{value}} Region Drill"
+      #   url:"/looks/1365?&f[listings.neighbourhood]={{ value }}&f[calendar.calendar_date]={{ _filters['calendar.calendar_date'] | url_encode }}"
+      # }
     drill_fields: [id,host_name, neighbourhood, amenities, beds,average_price,price]
 
     }
