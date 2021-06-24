@@ -693,7 +693,7 @@ dimension: listings_location {
   dimension: neighbourhood {
     type: string
     sql: ${TABLE}.neighbourhood ;;
-    html: <a href="/dashboards/399?Date={{ _filters['calendar.calendar_date'] }}"> {{value}} </a>;;
+    html: <a href="/dashboards/399?Date_test={{ _filters['calendar.calendar_date'] }}"> {{value}} </a>;;
 
       # link: {
       #   label: "{{value}} Region Drill"
